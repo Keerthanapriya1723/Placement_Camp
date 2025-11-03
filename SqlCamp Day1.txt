@@ -1,0 +1,448 @@
+
+mysql> create database camp;
+Query OK, 1 row affected (0.23 sec)
+
+mysql> use camp;
+Database changed
+mysql> CREATE TABLE Country (
+    ->     CountryCode CHAR(3) NOT NULL,
+    ->     Name VARCHAR(35) NOT NULL,
+    ->     Continent VARCHAR(20) NOT NULL,
+    ->     SurfaceArea DECIMAL(10,2) NOT NULL,
+    ->     LifeExpectancy DECIMAL(3,1) NOT NULL DEFAULT 0,
+    ->     Independence DATE NOT NULL,
+    ->     PRIMARY KEY (CountryCode)
+    -> );
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> CREATE TABLE City (
+    ->     ID INT NOT NULL AUTO_INCREMENT,
+    ->     Name VARCHAR(35) NOT NULL,
+    ->     CountryCode CHAR(3) NOT NULL,
+    ->     Population INT NOT NULL DEFAULT 0,
+    ->     PRIMARY KEY (ID),
+    ->     FOREIGN KEY (CountryCode) REFERENCES Country(CountryCode)
+    -> );
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> ^C
+mysql> CREATE TABLE Country_Language (
+    ->     CountryCode CHAR(3) NOT NULL,
+    ->     Language VARCHAR(30) NOT NULL,
+    ->     IsOfficial CHAR(1) NOT NULL CHECK (IsOfficial IN ('T', 'F')),
+    ->     PRIMARY KEY (CountryCode, Language),
+    ->     FOREIGN KEY (CountryCode) REFERENCES Country(CountryCode)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> INSERT INTO country (CountryCode, Name, Continent, SurfaceArea, LifeExpectancy, Independence) VALUES
+    -> ('USA', 'United States', 'North America', 9833520.00, 78.8, '1776-07-04'),
+    -> ('JPN', 'Japan', 'Asia', 377975.00, 84.6, '660-02-11'),
+    -> ('FRA', 'France', 'Europe', 643801.00, 82.5, '843-08-10'),
+    -> ('IND', 'India', 'Asia', 3287263.00, 69.7, '1947-08-15'),
+    -> ('GBR', 'United Kingdom', 'Europe', 243610.00, 81.2, '1707-05-01'),
+    -> ('AUS', 'Australia', 'Oceania', 7692024.00, 82.9, '1901-01-01'),
+    -> ('EGY', 'Egypt', 'Africa', 1002450.00, 72.7, '1922-02-28'),
+    -> ('CHN', 'China', 'Asia', 9596961.00, 76.9, '1949-10-01'),
+    -> ('RUS', 'Russia', 'Europe', 17098242.00, 72.6, '1991-12-25'),
+    -> ('DEU', 'Germany', 'Europe', 357022.00, 81.0, '1871-01-18'),
+    -> ('ESP', 'Spain', 'Europe', 505990.00, 83.0, '1469-10-19'),
+    -> ('CAN', 'Canada', 'North America', 9984670.00, 82.3, '1867-07-01'),
+    -> ('BRA', 'Brazil', 'South America', 8515767.00, 75.5, '1822-09-07'),
+    -> ('ZAF', 'South Africa', 'Africa', 1219090.00, 64.1, '1910-05-31'),
+    -> ('KOR', 'South Korea', 'Asia', 100210.00, 83.3, '1948-08-15'),
+    -> ('ITA', 'Italy', 'Europe', 301340.00, 82.8, '1861-03-17'),
+    -> ('MEX', 'Mexico', 'North America', 1964375.00, 76.7, '1810-09-16'),
+    -> ('ARG', 'Argentina', 'South America', 2780400.00, 76.1, '1816-07-09'),
+    -> ('NGA', 'Nigeria', 'Africa', 923769.00, 55.2, '1960-10-01'),
+    -> ('SAU', 'Saudi Arabia', 'Asia', 2149690.00, 75.3, '1932-09-23'),
+    -> ('TUR', 'Turkey', 'Europe', 783562.00, 77.7, '1923-10-29'),
+    -> ('THA', 'Thailand', 'Asia', 513120.00, 77.1, '1238-01-01'),
+    -> ('IRN', 'Iran', 'Asia', 1648195.00, 76.0, '1979-02-11'),
+    -> ('PAK', 'Pakistan', 'Asia', 881912.00, 67.3, '1947-08-14'),
+    -> ('IDN', 'Indonesia', 'Asia', 1904569.00, 71.7, '1945-08-17'),
+    -> ('NLD', 'Netherlands', 'Europe', 41543.00, 82.1, '1581-07-26'),
+    -> ('SWE', 'Sweden', 'Europe', 450295.00, 83.4, '1523-06-06'),
+    -> ('NOR', 'Norway', 'Europe', 385207.00, 82.9, '1905-06-07'),
+    -> ('PHL', 'Philippines', 'Asia', 300000.00, 71.0, '1946-07-04'),
+    -> ('VNM', 'Vietnam', 'Asia', 331212.00, 73.6, '1945-09-02');
+Query OK, 30 rows affected (0.02 sec)
+Records: 30  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO city (Name, CountryCode, Population) VALUES
+    -> ('New York', 'USA', 8419600),
+    -> ('Los Angeles', 'USA', 3980400),
+    -> ('Tokyo', 'JPN', 13929286),
+    -> ('Osaka', 'JPN', 2691000),
+    -> ('Paris', 'FRA', 2148000),
+    -> ('Marseille', 'FRA', 861635),
+    -> ('Mumbai', 'IND', 12478447),
+    -> ('Delhi', 'IND', 11007835),
+    -> ('London', 'GBR', 8982000),
+    -> ('Sydney', 'AUS', 5312163),
+    -> ('Melbourne', 'AUS', 5078193),
+    -> ('Cairo', 'EGY', 10230350),
+    -> ('Beijing', 'CHN', 21540000),
+    -> ('Shanghai', 'CHN', 24240000),
+    -> ('Moscow', 'RUS', 12506468),
+    -> ('Berlin', 'DEU', 3769000),
+    -> ('Madrid', 'ESP', 3266000),
+    -> ('Barcelona', 'ESP', 1620000),
+    -> ('Toronto', 'CAN', 2731571),
+    -> ('Montreal', 'CAN', 1704694),
+    -> ('São Paulo', 'BRA', 12325232),
+    -> ('Rio de Janeiro', 'BRA', 6748000),
+    -> ('Johannesburg', 'ZAF', 5777940),
+    -> ('Cape Town', 'ZAF', 433688),
+    -> ('Seoul', 'KOR', 9733509),
+    -> ('Rome', 'ITA', 2873000),
+    -> ('Milan', 'ITA', 1366180),
+    -> ('Mexico City', 'MEX', 9209944),
+    -> ('Buenos Aires', 'ARG', 2891082),
+    -> ('Lagos', 'NGA', 14657000);
+Query OK, 30 rows affected (0.02 sec)
+Records: 30  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO country_language (CountryCode, Language, IsOfficial) VALUES
+    -> ('USA', 'English', 'T'),
+    -> ('USA', 'Spanish', 'F'),
+    -> ('JPN', 'Japanese', 'T'),
+    -> ('FRA', 'French', 'T'),
+    -> ('IND', 'Hindi', 'T'),
+    -> ('IND', 'English', 'F'),
+    -> ('GBR', 'English', 'T'),
+    -> ('AUS', 'English', 'T'),
+    -> ('EGY', 'Arabic', 'T'),
+    -> ('CHN', 'Mandarin', 'T'),
+    -> ('CHN', 'Cantonese', 'F'),
+    -> ('RUS', 'Russian', 'T'),
+    -> ('DEU', 'German', 'T'),
+    -> ('ESP', 'Spanish', 'T'),
+    -> ('CAN', 'English', 'T'),
+    -> ('CAN', 'French', 'T'),
+    -> ('BRA', 'Portuguese', 'T'),
+    -> ('ZAF', 'Zulu', 'F'),
+    -> ('ZAF', 'English', 'T'),
+    -> ('KOR', 'Korean', 'T'),
+    -> ('ITA', 'Italian', 'T'),
+    -> ('MEX', 'Spanish', 'T'),
+    -> ('ARG', 'Spanish', 'T'),
+    -> ('NGA', 'English', 'T'),
+    -> ('SAU', 'Arabic', 'T'),
+    -> ('TUR', 'Turkish', 'T'),
+    -> ('THA', 'Thai', 'T'),
+    -> ('IRN', 'Persian', 'T'),
+    -> ('PAK', 'Urdu', 'T'),
+    -> ('IDN', 'Indonesian', 'T'),
+    -> ('NLD', 'Dutch', 'T'),
+    -> ('SWE', 'Swedish', 'T'),
+    -> ('NOR', 'Norwegian', 'T'),
+    -> ('PHL', 'Filipino', 'T'),
+    -> ('VNM', 'Vietnamese', 'T');
+Query OK, 35 rows affected (0.01 sec)
+Records: 35  Duplicates: 0  Warnings: 0
+
+mysql> select  * from country;
++-------------+----------------+---------------+-------------+----------------+--------------+
+| CountryCode | Name           | Continent     | SurfaceArea | LifeExpectancy | Independence |
++-------------+----------------+---------------+-------------+----------------+--------------+
+| ARG         | Argentina      | South America |  2780400.00 |           76.1 | 1816-07-09   |
+| AUS         | Australia      | Oceania       |  7692024.00 |           82.9 | 1901-01-01   |
+| BRA         | Brazil         | South America |  8515767.00 |           75.5 | 1822-09-07   |
+| CAN         | Canada         | North America |  9984670.00 |           82.3 | 1867-07-01   |
+| CHN         | China          | Asia          |  9596961.00 |           76.9 | 1949-10-01   |
+| DEU         | Germany        | Europe        |   357022.00 |           81.0 | 1871-01-18   |
+| EGY         | Egypt          | Africa        |  1002450.00 |           72.7 | 1922-02-28   |
+| ESP         | Spain          | Europe        |   505990.00 |           83.0 | 1469-10-19   |
+| FRA         | France         | Europe        |   643801.00 |           82.5 | 0843-08-10   |
+| GBR         | United Kingdom | Europe        |   243610.00 |           81.2 | 1707-05-01   |
+| IDN         | Indonesia      | Asia          |  1904569.00 |           71.7 | 1945-08-17   |
+| IND         | India          | Asia          |  3287263.00 |           69.7 | 1947-08-15   |
+| IRN         | Iran           | Asia          |  1648195.00 |           76.0 | 1979-02-11   |
+| ITA         | Italy          | Europe        |   301340.00 |           82.8 | 1861-03-17   |
+| JPN         | Japan          | Asia          |   377975.00 |           84.6 | 0660-02-11   |
+| KOR         | South Korea    | Asia          |   100210.00 |           83.3 | 1948-08-15   |
+| MEX         | Mexico         | North America |  1964375.00 |           76.7 | 1810-09-16   |
+| NGA         | Nigeria        | Africa        |   923769.00 |           55.2 | 1960-10-01   |
+| NLD         | Netherlands    | Europe        |    41543.00 |           82.1 | 1581-07-26   |
+| NOR         | Norway         | Europe        |   385207.00 |           82.9 | 1905-06-07   |
+| PAK         | Pakistan       | Asia          |   881912.00 |           67.3 | 1947-08-14   |
+| PHL         | Philippines    | Asia          |   300000.00 |           71.0 | 1946-07-04   |
+| RUS         | Russia         | Europe        | 17098242.00 |           72.6 | 1991-12-25   |
+| SAU         | Saudi Arabia   | Asia          |  2149690.00 |           75.3 | 1932-09-23   |
+| SWE         | Sweden         | Europe        |   450295.00 |           83.4 | 1523-06-06   |
+| THA         | Thailand       | Asia          |   513120.00 |           77.1 | 1238-01-01   |
+| TUR         | Turkey         | Europe        |   783562.00 |           77.7 | 1923-10-29   |
+| USA         | United States  | North America |  9833520.00 |           78.8 | 1776-07-04   |
+| VNM         | Vietnam        | Asia          |   331212.00 |           73.6 | 1945-09-02   |
+| ZAF         | South Africa   | Africa        |  1219090.00 |           64.1 | 1910-05-31   |
++-------------+----------------+---------------+-------------+----------------+--------------+
+30 rows in set (0.00 sec)
+
+mysql> select  * from city;
++----+----------------+-------------+------------+
+| ID | Name           | CountryCode | Population |
++----+----------------+-------------+------------+
+|  1 | New York       | USA         |    8419600 |
+|  2 | Los Angeles    | USA         |    3980400 |
+|  3 | Tokyo          | JPN         |   13929286 |
+|  4 | Osaka          | JPN         |    2691000 |
+|  5 | Paris          | FRA         |    2148000 |
+|  6 | Marseille      | FRA         |     861635 |
+|  7 | Mumbai         | IND         |   12478447 |
+|  8 | Delhi          | IND         |   11007835 |
+|  9 | London         | GBR         |    8982000 |
+| 10 | Sydney         | AUS         |    5312163 |
+| 11 | Melbourne      | AUS         |    5078193 |
+| 12 | Cairo          | EGY         |   10230350 |
+| 13 | Beijing        | CHN         |   21540000 |
+| 14 | Shanghai       | CHN         |   24240000 |
+| 15 | Moscow         | RUS         |   12506468 |
+| 16 | Berlin         | DEU         |    3769000 |
+| 17 | Madrid         | ESP         |    3266000 |
+| 18 | Barcelona      | ESP         |    1620000 |
+| 19 | Toronto        | CAN         |    2731571 |
+| 20 | Montreal       | CAN         |    1704694 |
+| 21 | São Paulo      | BRA         |   12325232 |
+| 22 | Rio de Janeiro | BRA         |    6748000 |
+| 23 | Johannesburg   | ZAF         |    5777940 |
+| 24 | Cape Town      | ZAF         |     433688 |
+| 25 | Seoul          | KOR         |    9733509 |
+| 26 | Rome           | ITA         |    2873000 |
+| 27 | Milan          | ITA         |    1366180 |
+| 28 | Mexico City    | MEX         |    9209944 |
+| 29 | Buenos Aires   | ARG         |    2891082 |
+| 30 | Lagos          | NGA         |   14657000 |
++----+----------------+-------------+------------+
+30 rows in set (0.00 sec)
+
+mysql> select * from country_language;
++-------------+------------+------------+
+| CountryCode | Language   | IsOfficial |
++-------------+------------+------------+
+| ARG         | Spanish    | T          |
+| AUS         | English    | T          |
+| BRA         | Portuguese | T          |
+| CAN         | English    | T          |
+| CAN         | French     | T          |
+| CHN         | Cantonese  | F          |
+| CHN         | Mandarin   | T          |
+| DEU         | German     | T          |
+| EGY         | Arabic     | T          |
+| ESP         | Spanish    | T          |
+| FRA         | French     | T          |
+| GBR         | English    | T          |
+| IDN         | Indonesian | T          |
+| IND         | English    | F          |
+| IND         | Hindi      | T          |
+| IRN         | Persian    | T          |
+| ITA         | Italian    | T          |
+| JPN         | Japanese   | T          |
+| KOR         | Korean     | T          |
+| MEX         | Spanish    | T          |
+| NGA         | English    | T          |
+| NLD         | Dutch      | T          |
+| NOR         | Norwegian  | T          |
+| PAK         | Urdu       | T          |
+| PHL         | Filipino   | T          |
+| RUS         | Russian    | T          |
+| SAU         | Arabic     | T          |
+| SWE         | Swedish    | T          |
+| THA         | Thai       | T          |
+| TUR         | Turkish    | T          |
+| USA         | English    | T          |
+| USA         | Spanish    | F          |
+| VNM         | Vietnamese | T          |
+| ZAF         | English    | T          |
+| ZAF         | Zulu       | F          |
++-------------+------------+------------+
+35 rows in set (0.00 sec)
+
+mysql> select name,population from city;
++----------------+------------+
+| name           | population |
++----------------+------------+
+| New York       |    8419600 |
+| Los Angeles    |    3980400 |
+| Tokyo          |   13929286 |
+| Osaka          |    2691000 |
+| Paris          |    2148000 |
+| Marseille      |     861635 |
+| Mumbai         |   12478447 |
+| Delhi          |   11007835 |
+| London         |    8982000 |
+| Sydney         |    5312163 |
+| Melbourne      |    5078193 |
+| Cairo          |   10230350 |
+| Beijing        |   21540000 |
+| Shanghai       |   24240000 |
+| Moscow         |   12506468 |
+| Berlin         |    3769000 |
+| Madrid         |    3266000 |
+| Barcelona      |    1620000 |
+| Toronto        |    2731571 |
+| Montreal       |    1704694 |
+| São Paulo      |   12325232 |
+| Rio de Janeiro |    6748000 |
+| Johannesburg   |    5777940 |
+| Cape Town      |     433688 |
+| Seoul          |    9733509 |
+| Rome           |    2873000 |
+| Milan          |    1366180 |
+| Mexico City    |    9209944 |
+| Buenos Aires   |    2891082 |
+| Lagos          |   14657000 |
++----------------+------------+
+30 rows in set (0.00 sec)
+
+mysql> select name , countrycode from country where name='india';
++-------+-------------+
+| name  | countrycode |
++-------+-------------+
+| India | IND         |
++-------+-------------+
+1 row in set (0.00 sec)
+
+
+mysql> select name, LifeExpectancy from country order by  LifeExpectancy desc;
++----------------+----------------+
+| name           | LifeExpectancy |
++----------------+----------------+
+| Japan          |           84.6 |
+| Sweden         |           83.4 |
+| South Korea    |           83.3 |
+| Spain          |           83.0 |
+| Australia      |           82.9 |
+| Norway         |           82.9 |
+| Italy          |           82.8 |
+| France         |           82.5 |
+| Canada         |           82.3 |
+| Netherlands    |           82.1 |
+| United Kingdom |           81.2 |
+| Germany        |           81.0 |
+| United States  |           78.8 |
+| Turkey         |           77.7 |
+| Thailand       |           77.1 |
+| China          |           76.9 |
+| Mexico         |           76.7 |
+| Argentina      |           76.1 |
+| Iran           |           76.0 |
+| Brazil         |           75.5 |
+| Saudi Arabia   |           75.3 |
+| Vietnam        |           73.6 |
+| Egypt          |           72.7 |
+| Russia         |           72.6 |
+| Indonesia      |           71.7 |
+| Philippines    |           71.0 |
+| India          |           69.7 |
+| Pakistan       |           67.3 |
+| South Africa   |           64.1 |
+| Nigeria        |           55.2 |
++----------------+----------------+
+30 rows in set (0.01 sec)
+
+mysql> select distinct continent from country;
++---------------+
+| continent     |
++---------------+
+| South America |
+| Oceania       |
+| North America |
+| Asia          |
+| Europe        |
+| Africa        |
++---------------+
+6 rows in set (0.01 sec)
+
+mysql> select name, LifeExpectancy from country where  LifeExpectancy >80;
++----------------+----------------+
+| name           | LifeExpectancy |
++----------------+----------------+
+| Australia      |           82.9 |
+| Canada         |           82.3 |
+| Germany        |           81.0 |
+| Spain          |           83.0 |
+| France         |           82.5 |
+| United Kingdom |           81.2 |
+| Italy          |           82.8 |
+| Japan          |           84.6 |
+| South Korea    |           83.3 |
+| Netherlands    |           82.1 |
+| Norway         |           82.9 |
+| Sweden         |           83.4 |
++----------------+----------------+
+12 rows in set (0.00 sec)
+
+mysql> select  name,population from city where population between 5000000 and 10000000;
++----------------+------------+
+| name           | population |
++----------------+------------+
+| New York       |    8419600 |
+| London         |    8982000 |
+| Sydney         |    5312163 |
+| Melbourne      |    5078193 |
+| Rio de Janeiro |    6748000 |
+| Johannesburg   |    5777940 |
+| Seoul          |    9733509 |
+| Mexico City    |    9209944 |
++----------------+------------+
+8 rows in set (0.01 sec)
+
+mysql> select name ,population from city where name like 'M%';
++-------------+------------+
+| name        | population |
++-------------+------------+
+| Marseille   |     861635 |
+| Mumbai      |   12478447 |
+| Melbourne   |    5078193 |
+| Moscow      |   12506468 |
+| Madrid      |    3266000 |
+| Montreal    |    1704694 |
+| Milan       |    1366180 |
+| Mexico City |    9209944 |
++-------------+------------+
+8 rows in set (0.01 sec)
+
+mysql> select name,continent from country where continent ='Asia' or continent ='Europe';
++----------------+-----------+
+| name           | continent |
++----------------+-----------+
+| China          | Asia      |
+| Germany        | Europe    |
+| Spain          | Europe    |
+| France         | Europe    |
+| United Kingdom | Europe    |
+| Indonesia      | Asia      |
+| India          | Asia      |
+| Iran           | Asia      |
+| Italy          | Europe    |
+| Japan          | Asia      |
+| South Korea    | Asia      |
+| Netherlands    | Europe    |
+| Norway         | Europe    |
+| Pakistan       | Asia      |
+| Philippines    | Asia      |
+| Russia         | Europe    |
+| Saudi Arabia   | Asia      |
+| Sweden         | Europe    |
+| Thailand       | Asia      |
+| Turkey         | Europe    |
+| Vietnam        | Asia      |
++----------------+-----------+
+21 rows in set (0.00 sec)
+
+mysql> select count(*) as TotalCountries from country;
++----------------+
+| TotalCountries |
++----------------+
+|             30 |
++----------------+
+1 row in set (0.03 sec)
+
+mysql> select avg(population) as AvgPopulation from city;
++---------------+
+| AvgPopulation |
++---------------+
+|  7417073.9000 |
++---------------+
+1 row in set (0.01 sec)
